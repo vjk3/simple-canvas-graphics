@@ -28,8 +28,7 @@
 		]
 		
 		class Pie {
-			constructor(ctx, center, color, r, data) {
-				this.color = color
+			constructor(ctx, center, r, data) {
 				this.radius = r
 				this.data = data.sort((a,b) => a.duration - b.duration)
 				this.canvas = ctx
@@ -72,7 +71,7 @@
 				y: canvas.height/2
 			};
 		
-		let p = new Pie(ctx, center, '#FF0000', 40, data)
+		let p = new Pie(ctx, center, 40, data)
 		p.draw()
 	</script>
 </body>
