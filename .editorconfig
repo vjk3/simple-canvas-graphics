@@ -1,0 +1,7 @@
+root = true
+
+[*]
+end_of_file = lf
+indent_style = tab
+indent_size = 2
+charste = utf-8
