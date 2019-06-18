@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		#canvas {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<script>
+		let data = [
+			{activity: 'running', duration: 35, color: '#FF0000'},
+			{activity: 'walking', duration: 10, color: '#00FF00'},
+			{activity: 'reading', duration: 15, color: '#FFFF00'},
+			{activity: 'lifting', duration: 46, color: '#0000FF'}
+		]
+		
+		class Pie {
+			constructor(ctx, center, color, r, data) {
+				this.color = color
+				this.radius = r
+				this.data = data.sort((a,b) => a.duration - b.duration)
+				this.canvas = ctx
+				this.center = center
+			}
+		
+			slice(start, end, color) {
+				let c = this.canvas
+				
+				c.beginPath()
+				c.fillStyle = color
+				c.moveTo(this.center.x, this.center.y)
+				c.arc(
+					this.center.x,
+					this.center.y,
+					this.radius,
+					start,
+					end
+				)
+				c.fill()				
+			}
+			
+			draw() {
+				let sum = this.data
+								.map(l => l.duration)
+								.reduce((a,b) => a+b)
+				
+				let sangle = 0
+				this.data.map(item => {
+					let endangle = sangle + ((item.duration/sum) * Math.PI * 2)
+					this.slice(sangle, endangle, item.color)
+					sangle = endangle
+				})
+			}
+		}
+		
+		let ctx = canvas.getContext('2d'),
+			center = {
+				x: canvas.width/2,
+				y: canvas.height/2
+			};
+		
+		let p = new Pie(ctx, center, '#FF0000', 40, data)
+		p.draw()
+	</script>
+</body>
+</html>
