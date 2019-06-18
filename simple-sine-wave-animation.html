@@ -27,13 +27,13 @@
 			}
 		
 		let angle = 270,     // start angle. Modify this to change the phase.
-			trailSize = 300,
+			trailSize = 255,
 			i = 0
 		
 		let draw = () => {
 			c.clearRect(0, 0, canvas.width, canvas.height)
 			
-			let size = 1,
+			let size = 2,
 				amplitude = 65,
 				spiral = 0,
 				frequency = 2,
@@ -42,12 +42,12 @@
 			for(let j = 0; j < trailSize; j++) {
 				spirality = spiral? (j/trailSize) : 1
 				
-				let radian = (angle + (1*j))/180 * Math.PI,
+				let radian = (angle + (1*j))/65,
 					x = Math.sin(radian) * amplitude * spirality,
 					y = Math.cos(radian) * amplitude * spirality
 				
 				c.beginPath()
-				c.fillStyle = `rgba(255, 0, 0, ${10/j})`
+				c.fillStyle = `rgba(${255-j}, ${j}, ${j}, ${50/(j+1)})`
 				c.arc(center.x - (j/frequency), center.y + y, size*(1 - j/trailSize), 0, 2*Math.PI)
 				c.fill()
 				
