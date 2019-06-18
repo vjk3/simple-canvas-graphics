@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
+  <title>Simple sine wave animation</title>
 	<style>
 		html, body {
 			width: 100%;
@@ -26,31 +26,34 @@
 				y: canvas.height/2
 			}
 		
-		let angle = 180,     // start angle. Modify this to change the phase.
-			trailSize = 200,
+		let angle = 270,     // start angle. Modify this to change the phase.
+			trailSize = 300,
 			i = 0
 		
 		let draw = () => {
 			c.clearRect(0, 0, canvas.width, canvas.height)
 			
-			let size = 2,
-				radius = 65,
-				spiral = 0
+			let size = 1,
+				amplitude = 65,
+				spiral = 0,
+				frequency = 2,
+				speed = 3
 			
 			for(let j = 0; j < trailSize; j++) {
 				spirality = spiral? (j/trailSize) : 1
 				
-				let x = Math.sin((angle + (1*j))/180 * Math.PI) * radius * spirality,
-					y = Math.cos((angle + (1*j))/180 * Math.PI) * radius * spirality
+				let radian = (angle + (1*j))/180 * Math.PI,
+					x = Math.sin(radian) * amplitude * spirality,
+					y = Math.cos(radian) * amplitude * spirality
 				
 				c.beginPath()
 				c.fillStyle = `rgba(255, 0, 0, ${10/j})`
-				c.arc(center.x + j, center.y + y, size*(1 - j/trailSize), 0, 2*Math.PI)
+				c.arc(center.x - (j/frequency), center.y + y, size*(1 - j/trailSize), 0, 2*Math.PI)
 				c.fill()
 				
 			}
 			
-			angle -= 0.5
+			angle -= speed
 			
 			window.requestAnimationFrame(draw)
 		}
